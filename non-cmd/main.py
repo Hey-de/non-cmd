@@ -47,11 +47,11 @@ class NonCmd:
                 print(Fore.YELLOW + "#Compilled Python#", end=">")
             cmd = input()
             while cmd != "exit":
-                if cmd.split(" ")[0] == "cd":
-                    print(Fore.RED + '"cd" command changed to "cd /p" command')
-                elif cmd.split(" /p ")[0] == "cd":
+                if cmd.split(" /p ")[0] == "cd":
                     os.chdir(cmd.split(" /p ")[1])
                     os.system("cd " + cmd.split(" /p ")[1])
+                elif cmd.split(" ")[0] == "cd":
+                    print(Fore.RED + '"cd" command changed to "cd /p" command')
                 elif cmd == "dir":
                     print(Fore.BLUE + "Folder " + os.getcwd() + " contents:")
                     for dir in os.listdir(os.getcwd()):
