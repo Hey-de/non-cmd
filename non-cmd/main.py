@@ -6,6 +6,7 @@ import json
 import os
 import sys
 from typing import TextIO
+import module
 
 from colorama import init, Fore, Back
 
@@ -16,6 +17,7 @@ class NonCmd:
         self.mods = args[1]
         self.is_terminal = terminal
         self.stand_mods = {'UDP': "", 'TCP': "", 'SSH': "", 'Internet': ""}
+        self.cache_mods = self.mods
 
     def config(self, options):
         for option, value in options.items():
@@ -23,7 +25,7 @@ class NonCmd:
                 if not value:
                     self.mods = {}
                 else:
-                    self.mods = value
+                    self.mods = self.cache_mods
             elif option == "use_www":
                 if value:
                     self.stand_mods = {'UDP': "", 'TCP': "", 'SSH': "", 'Internet': ""}
@@ -82,10 +84,8 @@ if __name__ == '__main__':
     f: TextIO
     print(Back.BLUE + Fore.GREEN + """Welcome to non-cmd Shell!
     Python has been already installed because non-cmd cannot run without Python""")
-    with open("modules.json") as f:
-        mods = json.load(f)
     is_t = "y" == input(Fore.BLACK + "Run as terminal[y/n] ")
-    session = NonCmd([sys.argv, mods], is_t)
+    session = NonCmd([sys.argv], is_t)
     with open("config.json") as f:
         cfg = json.load(f)
     session.config(cfg)
